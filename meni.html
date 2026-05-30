@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Bi Menu - Vườn Nhà Bi</title>
+  
+  <!-- Google Fonts: Cormorant Garamond (luxury serif) & Plus Jakarta Sans (ultra-clean sans-serif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #05130f;           /* Luxury Forest Dark Green background */
+      --card: #0d231c;         /* Sleek Dark Pine card background */
+      --soft: rgba(245, 158, 11, 0.08); /* Sophisticated gold/amber glow light accent */
+      --line: rgba(245, 158, 11, 0.15); /* Elegant gold/champagne thin border */
+      --text: #ffffff;         /* Sharp high-contrast white text */
+      --muted: #8ba39a;        /* Soft moss/grey-green text */
+      --primary: #f59e0b;      /* Gorgeous warm gold/amber */
+      --primary-dark: #b45309; /* Deeper brushed gold */
+      --primary-gradient: linear-gradient(135deg, #ea580c, #b45309); /* Fiery sunset-orange/amber gradient */
+      --danger: #ef4444;      /* High contrast red */
+      --success: #10b981;     /* Royal Emerald green */
+      --success-gradient: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+      overscroll-behavior-x: none;
+      -webkit-font-smoothing: antialiased;
+      overflow-y: auto;
+    }
+
+    body {
+      padding-bottom: 120px;
+      overscroll-behavior: none;
+    }
+
+    /* Minimalist Elegant Header Panel (Glassmorphic Forest Green Mode) */
+    .topbar {
+      background: rgba(5, 19, 15, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 14px 18px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 4px 30px rgba(5, 19, 15, 0.5);
+    }
+
+    .topbar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+    }
+    .brand-title span {
+      color: var(--primary);
+      font-style: italic;
+      font-weight: 700;
+    }
+
+    /* Sleek Outline Table Selector Pill */
+    .table-selector-box {
+      background: rgba(245, 158, 11, 0.04);
+      border: 1px solid var(--primary);
+      border-radius: 9999px;
+      padding: 5px 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .table-selector-box:active {
+      transform: scale(0.96);
+      background: rgba(245, 158, 11, 0.12);
+    }
+
+    .table-selector-box label {
+      font-size: 10px;
+      color: var(--primary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      pointer-events: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .active-table-text {
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      pointer-events: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .table-saved {
+      background: rgba(245, 158, 11, 0.1) !important;
+      border-color: var(--primary) !important;
+    }
+
+    .table-saved label {
+      color: var(--primary) !important;
+    }
+    .table-saved .active-table-text {
+      color: var(--primary) !important;
+    }
+
+    .btn-change-table {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 4px;
+      cursor: pointer;
+      display: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Sleek search bar pill */
+    .search-wrapper {
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      background: #081c15;
+      border: 1px solid rgba(245, 158, 11, 0.15);
+      border-radius: 9999px;
+      padding: 10px 16px 10px 36px;
+      color: #ffffff;
+      font-size: 13.5px;
+      font-weight: 400;
+      outline: none;
+      transition: all 0.25s ease;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .search-input::placeholder {
+      color: var(--muted);
+      opacity: 0.8;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.15);
+    }
+
+    .search-icon-svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translatey(-50%);
+      color: var(--primary);
+      width: 15px;
+      height: 15px;
+      pointer-events: none;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      background: var(--soft);
+      border-radius: 50%;
+      color: var(--muted);
+      border: none;
+      font-size: 12px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+    }
+    .search-clear.show {
+      display: flex;
+    }
+
+    /* Horizontal Category Pill Tabs (Minimalist design) */
+    .tabs-container {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 12px 18px;
+      scrollbar-width: none;
+    }
+
+    .tabs-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      background: rgba(13, 35, 28, 0.6);
+      border: 1px solid rgba(245, 158, 11, 0.15);
+      color: var(--muted);
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #05130f;
+      font-weight: 700;
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
+    }
+
+    .content-section {
+      padding: 0 18px;
+    }
+
+    /* Category header in gold Cormorant Garamond italic serif */
+    .category-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 21px;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--primary);
+      margin: 32px 0 16px 0;
+      text-transform: capitalize;
+      letter-spacing: 1.5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .category-title::after {
+      content: "";
+      flex: 1;
+      height: 1.5px;
+      background: linear-gradient(to right, var(--primary), transparent);
+    }
+
+    .menu-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Premium Food Cards - Dark forest green background */
+    .menu-item {
+      background: #0d231c;
+      border: 1px solid rgba(245, 158, 11, 0.12);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      gap: 14px;
+      position: relative;
+      align-items: center;
+      transition: all 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Thẻ món chọn lung linh dưới ánh đèn nhà hàng nướng */
+    .menu-item-active {
+      border-color: var(--primary) !important;
+      background: #0f2d22 !important;
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.2) !important;
+    }
+
+    .item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+      color: #ffffff;
+      letter-spacing: -0.2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .item-price {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .action-wrapper {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    /* Nút "THÊM" Vàng Óng viền mỏng và chữ in hoa màu vàng */
+    .btn-add-initial {
+      background: rgba(13, 35, 28, 0.6);
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+      border-radius: 9999px;
+      padding: 6px 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+      box-shadow: 0 2px 8px rgba(245, 158, 11, 0.1);
+    }
+    .btn-add-initial:active {
+      transform: scale(0.95);
+      background: var(--primary);
+      color: #05130f;
+    }
+
+    .out-of-stock-badge {
+      background: rgba(13, 35, 28, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      background: #13362a;
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 9999px;
+      padding: 2px;
+      gap: 8px;
+    }
+
+    .btn-qty {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #0d231c;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: all 0.1s cubic-bezier(0.215, 0.61, 0.355, 1);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .btn-qty:active {
+      transform: scale(0.85);
+      background: var(--primary);
+      color: #05130f;
+    }
+
+    .qty-value {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      min-width: 14px;
+      text-align: center;
+      color: #ffffff;
+    }
+
+    /* Fixed Glassmorphic Bottom Bar (Sleek Warm Theme) */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(5, 19, 15, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--line);
+      padding: 12px 20px calc(12px + env(safe-area-inset-bottom)) 20px;
+      z-index: 20;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .bar-flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .cart-summary {
+      flex: 1;
+    }
+
+    .summary-qty {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 10px;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .summary-total {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .btn-checkout {
+      background: var(--primary);
+      color: #05130f;
+      border: none;
+      border-radius: 9999px;
+      padding: 10px 24px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+    }
+    .btn-checkout:active {
+      transform: scale(0.96);
+      filter: brightness(0.95);
+    }
+
+    /* Modal overlays & drawers */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 30;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .modal-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-sheet {
+      width: 100%;
+      background: #0d231c;
+      border-top: 1px solid var(--line);
+      border-radius: 32px 32px 0 0;
+      padding: 12px 20px calc(20px + env(safe-area-inset-bottom)) 20px;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-overlay.show .modal-sheet {
+      transform: translateY(0);
+    }
+
+    .modal-handle {
+      width: 36px;
+      height: 4px;
+      background: var(--line);
+      border-radius: 99px;
+      margin: 0 auto 16px auto;
+      flex-shrink: 0;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+
+    .modal-title {
+      margin: 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 21px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+    }
+
+    .modal-close {
+      background: rgba(245, 158, 11, 0.08);
+      border: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      color: var(--primary);
+      font-size: 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: all 0.15s ease;
+    }
+    .modal-close:active {
+      transform: scale(0.85);
+    }
+
+    /* Table search grid */
+    .table-list-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      max-height: 40vh;
+      overflow-y: auto;
+      padding: 4px;
+    }
+
+    .table-list-grid::-webkit-scrollbar {
+      width: 4px;
+    }
+    .table-list-grid::-webkit-scrollbar-thumb {
+      background: var(--line);
+      border-radius: 10px;
+    }
+
+    .table-select-btn {
+      background: #05130f;
+      border: 1px solid rgba(245, 158, 11, 0.15);
+      color: #ffffff;
+      padding: 10px 8px;
+      border-radius: 14px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+      text-transform: capitalize;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .table-select-btn:active {
+      transform: scale(0.95);
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    .table-select-btn.active {
+      background: var(--primary) !important;
+      color: #05130f !important;
+      border-color: transparent !important;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(194, 65, 12, 0.25);
+    }
+
+    .cart-items-list {
+      overflow-y: auto;
+      flex: 1;
+      margin-bottom: 16px;
+    }
+
+    .cart-items-list::-webkit-scrollbar {
+      width: 4px;
+    }
+    .cart-items-list::-webkit-scrollbar-thumb {
+      background: var(--line);
+      border-radius: 10px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(245, 158, 11, 0.1);
+    }
+
+    .cart-item-info {
+      min-width: 0;
+      flex: 1;
+      padding-right: 12px;
+    }
+
+    .cart-item-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cart-item-price {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .note-input {
+      width: 100%;
+      background: #05130f;
+      border: 1px solid rgba(245, 158, 11, 0.15);
+      border-radius: 14px;
+      padding: 10px 12px;
+      color: #ffffff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 12px;
+      outline: none;
+      resize: none;
+      margin-bottom: 14px;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+
+    .note-input:focus {
+      border-color: var(--primary);
+      background: #081c15;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+    }
+
+    .btn-submit-order {
+      width: 100%;
+      background: var(--success-gradient);
+      color: #ffffff;
+      border: none;
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+      transition: all 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+      flex-shrink: 0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-submit-order:active {
+      transform: scale(0.97);
+      filter: brightness(0.95);
+    }
+
+    /* Sticky Bottom Quick Beer Bar CSS (Luxury Glass Frosted style in Row layout) */
+    .quick-beer-bar {
+      position: fixed;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      background: rgba(5, 19, 15, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      z-index: 18;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      transition: bottom 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.15s ease;
+    }
+
+    .beer-btn {
+      background: #0d231c;
+      border: 1px solid rgba(245, 158, 11, 0.15);
+      border-radius: 16px;
+      height: 54px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .beer-btn:active {
+      transform: scale(0.95);
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    .beer-btn-selected {
+      background: rgba(245, 158, 11, 0.1) !important;
+      border-color: var(--primary) !important;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15) !important;
+    }
+
+    .beer-qty-badge {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: var(--primary);
+      color: #05130f;
+      font-size: 10px;
+      font-weight: 800;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid #05130f;
+      box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .beer-btn-disabled {
+      opacity: 0.4;
+      pointer-events: none;
+      background: rgba(13, 35, 28, 0.4);
+    }
+
+    .beer-emoji {
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    .beer-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Fly up fade toast animation */
+    @keyframes floatUpFade {
+      0% { transform: translate(-50%, 0) scale(0.85); opacity: 0; }
+      20% { transform: translate(-50%, -20px) scale(1.05); opacity: 1; }
+      100% { transform: translate(-50%, -90px) scale(1); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Bottom Quick Beer Bar -->
+  <div class="quick-beer-bar" id="quickBeerBar"></div>
+
+  <!-- Header Section -->
+  <div class="topbar">
+    <div class="topbar-header">
+      <h1 class="brand-title">Bia Vườn <span>Nhà Bi</span></h1>
+      
+      <!-- Interactive Pill Table Selector (Click to search) -->
+      <div class="table-selector-box" id="tableBox" onclick="openTableModal()">
+        <label id="tableLabel">BÀN:</label>
+        <span id="activeTableText" class="active-table-text">-- Chọn Bàn --</span>
+        <button class="btn-change-table" id="changeTableBtn" onclick="event.stopPropagation(); unlockTableSelect();">Đổi</button>
+      </div>
+    </div>
+    
+    <!-- Search Bar with magnifying glass -->
+    <div class="search-wrapper">
+      <svg class="search-icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+      <input type="text" id="menuSearch" class="search-input" placeholder="Tìm mồi ngon, bia lạnh..." />
+      <button id="menuSearchClear" class="search-clear">&times;</button>
+    </div>
+  </div>
+
+  <!-- Tabs & Dishes -->
+  <div id="tabs" class="tabs-container"></div>
+  <div id="content" class="content-section"></div>
+
+  <!-- Bottom Summary Bar -->
+  <div id="bottomBar" class="bottom-bar" style="display:none;">
+    <div class="bar-flex">
+      <div class="cart-summary">
+        <div id="summaryQty" class="summary-qty">Đã chọn 0 món</div>
+        <div id="summaryTotal" class="summary-total">0₫</div>
+      </div>
+      <button class="btn-checkout" onclick="openModal()">Xem đơn đồ</button>
+    </div>
+  </div>
+
+  <!-- Checkout Drawer Sheet -->
+  <div id="modal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <div class="modal-header">
+        <h3 class="modal-title">Đơn gọi món của bạn</h3>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div id="cartList" class="cart-items-list"></div>
+      <textarea id="orderNote" class="note-input" rows="2" placeholder="Ghi chú bếp (ví dụ: ít đá, không cay, phục vụ nhanh...)"></textarea>
+      <button id="submitBtn" class="btn-submit-order" onclick="submitOrder()">Gửi Yêu Cầu Gọi Món</button>
+    </div>
+  </div>
+
+  <!-- Searchable Table Selector Modal Sheet -->
+  <div id="tableModal" class="modal-overlay" onclick="closeTableModal(event)">
+    <div class="modal-sheet" onclick="event.stopPropagation()">
+      <div class="modal-handle"></div>
+      <div class="modal-header">
+        <h3 class="modal-title">Chọn vị trí bàn</h3>
+        <button class="modal-close" onclick="closeTableModal()">&times;</button>
+      </div>
+      <div class="search-wrapper" style="margin-bottom: 16px; flex-shrink:0;">
+        <svg class="search-icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input type="text" id="tableSearchInput" class="search-input" placeholder="Tìm tên bàn (ví dụ: đào, lộc, bơm, lioa...)" oninput="filterTables()" />
+      </div>
+      <div id="tableListContainer" class="table-list-grid"></div>
+    </div>
+  </div>
+
+  <script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwu6O2OyWvvhICHJHzj8ROw-aWWtSIlbCpIlQB71PrwQ-LHWEJy4htDnb_CraKD-PCV/exec";
+
+    // 🌟 KHÔI PHỤC TOÀN BỘ 58 MÓN THỰC TẾ CHUẨN XÁC TỪ FILE MENU3 GỐC CỦA BẠN
+    const DEFAULT_MENU = [
+      // --- KHAI VỊ ---
+      { id: "dau_ran", name: "Đậu rán", price: 30000, category: "Khai vị" },
+      { id: "dau_tam_hanh", name: "Đậu tẩm hành", price: 40000, category: "Khai vị" },
+      { id: "nem_chua", name: "Nem chua", price: 40000, category: "Khai vị" },
+      { id: "nem_ngua", name: "Nem ngựa", price: 80000, category: "Khai vị" },
+      { id: "gio_bo", name: "Giò bò", price: 60000, category: "Khai vị" },
+      { id: "ngo_chien", name: "Ngô chiên", price: 40000, category: "Khai vị" },
+      { id: "ca_chi_vang", name: "Cá chỉ vàng", price: 80000, category: "Khai vị" },
+      { id: "ca_mai_chao", name: "Cá mai chao", price: 110000, category: "Khai vị" },
+      { id: "muc_kho_nuong", name: "Mực khô nướng", price: 150000, category: "Khai vị" },
+      { id: "muop_dang_ruoc", name: "Mướp đắng ruốc", price: 60000, category: "Khai vị" },
+      { id: "top_mo_dua_chua", name: "Tóp mỡ dưa chua", price: 100000, category: "Khai vị" },
+      { id: "hen_xuc_phong_tom", name: "Hến xúc phồng tôm", price: 100000, category: "Khai vị" },
+      { id: "bo_xuc_phong_tom", name: "Bò xúc phồng tôm", price: 130000, category: "Khai vị" },
+      { id: "nom_tai_heo", name: "Nộm tai heo", price: 100000, category: "Khai vị" },
+      { id: "nom_bo", name: "Nộm bò", price: 130000, category: "Khai vị" },
+      { id: "nom_sua", name: "Nộm sứa", price: 100000, category: "Khai vị" },
+      { id: "trung_ran_la_ngai", name: "Trứng rán lá ngải", price: 60000, category: "Khai vị" },
+      { id: "luoi_lon_tran", name: "Lưỡi lợn trần", price: 130000, category: "Khai vị" },
+      { id: "quai_lac_tran", name: "Quai lạc trần", price: 130000, category: "Khai vị" },
+
+      // --- NƯỚNG ---
+      { id: "ga_nuong_ca_con", name: "Gà nướng cả con", price: 300000, category: "Nướng" },
+      { id: "tom_nuong", name: "Tôm nướng", price: 150000, category: "Nướng" },
+      { id: "hau_nuong", name: "Hàu nướng", price: 100000, category: "Nướng" },
+      { id: "ca_nuong", name: "Cá nướng", price: 200000, category: "Nướng" },
+      { id: "ba_chi_nuong", name: "Ba chỉ nướng", price: 130000, category: "Nướng" },
+      { id: "doi_sun_nuong", name: "Dồi sụn nướng", price: 130000, category: "Nướng" },
+      { id: "long_nuong", name: "Lòng nướng", price: 80000, category: "Nướng" },
+      { id: "cat_nuong", name: "Cật nướng", price: 100000, category: "Nướng" },
+      { id: "thap_cam_nuong", name: "Thập cẩm nướng", price: 150000, category: "Nướng" },
+
+      // --- XÀO ---
+      { id: "rau_xao", name: "Rau xào", price: 40000, category: "Xào" },
+      { id: "ech_xao_mang", name: "Ếch xào măng", price: 120000, category: "Xào" },
+      { id: "ngua_xao_rau", name: "Ngựa xào rau", price: 130000, category: "Xào" },
+      { id: "bap_bo_xao_rau", name: "Bắp bò xào rau", price: 130000, category: "Xào" },
+      { id: "cho_xao_lan", name: "Chó xào lăn", price: 130000, category: "Xào" },
+      { id: "xach_xao", name: "Xách xào", price: 150000, category: "Xào" },
+      { id: "long_xao_dua", name: "Lòng xào dưa", price: 80000, category: "Xào" },
+      { id: "quai_lac_xao_rau", name: "Quai lạc xào rau", price: 150000, category: "Xào" },
+      { id: "muop_dang_xao_trung", name: "Mướp đắng xào trứng", price: 60000, category: "Xào" },
+      { id: "muc_xao", name: "Mực xào", price: 200000, category: "Xào" },
+      { id: "muc_nau_chua", name: "Mực nấu chua", price: 200000, category: "Xào" },
+      { id: "muc_hap", name: "Mực hấp", price: 200000, category: "Xào" },
+
+      // --- CHIÊN ---
+      { id: "ech_rang_muoi", name: "Ếch rang muối", price: 120000, category: "Chiên" },
+      { id: "ga_rang_muoi", name: "Gà rang muối", price: 150000, category: "Chiên" },
+      { id: "ga_chien_mam", name: "Gà chiên mắm", price: 150000, category: "Chiên" },
+      { id: "vit_rang_rieng", name: "Vịt rang riềng", price: 130000, category: "Chiên" },
+      { id: "chan_ga_chien_mam", name: "Chân gà chiên mắm", price: 100000, category: "Chiên" },
+      { id: "su_lon_chien_mam", name: "Sú lợn chiên mắm", price: 130000, category: "Chiên" },
+      { id: "tom_rang_muoi", name: "Tôm rang muối", price: 130000, category: "Chiên" },
+      { id: "ca_trung_chien_la_lot", name: "Cá trứng chiên lá lốt", price: 130000, category: "Chiên" },
+      { id: "chau_chau_chien", name: "Châu chấu chiên", price: 120000, category: "Chiên" },
+      { id: "ca_bong_chien_la_not", name: "Cá bống chiên lá nốt", price: 120000, category: "Chiên" },
+      { id: "ba_chi_rang_rieng", name: "Ba chỉ rang riềng", price: 130000, category: "Chiên" },
+      { id: "suon_chao_moc_mat", name: "Sườn chao móc mật", price: 150000, category: "Chiên" },
+      { id: "quai_lac_chao_moc_mat", name: "Quai lạc chao móc mật", price: 150000, category: "Chiên" },
+
+      // --- LẨU ---
+      { id: "lau_thai_thap_cam", name: "Lẩu thái thập cẩm", price: 500000, category: "Lẩu" },
+      { id: "lau_ech", name: "Lẩu ếch", price: 400000, category: "Lẩu" },
+      { id: "lau_xuong_dau", name: "Lẩu xương đầu", price: 400000, category: "Lẩu" },
+
+      // --- CƠM MỲ ---
+      { id: "com_rang_thap_cam", name: "Cơm rang thập cẩm", price: 60000, category: "Cơm mỳ" },
+      { id: "com_rang_dua_bo", name: "Cơm rang dưa bò", price: 80000, category: "Cơm mỳ" },
+      { id: "com_rang_hai_san", name: "Cơm rang hải sản", price: 100000, category: "Cơm mỳ" },
+      { id: "mi_xao", name: "Mì xào", price: 60000, category: "Cơm mỳ" },
+      { id: "canh_chua_ca_ria", name: "Canh chua cá rìa", price: 100000, category: "Cơm mỳ" },
+      { id: "canh_trung", name: "Canh trứng", price: 60000, category: "Cơm mỳ" },
+
+      // --- ĐỒ UỐNG ---
+      { id: "bia_hoi", name: "Bia hơi", price: 8000, category: "Đồ uống" },
+      { id: "bia_lon", name: "Bia lon", price: 13000, category: "Đồ uống" },
+      { id: "bia_chai", name: "Bia chai", price: 14000, category: "Đồ uống" },
+      { id: "nuoc_ngot", name: "Nước ngọt", price: 15000, category: "Đồ uống" },
+      { id: "nuoc_loc", name: "Nước lọc", price: 10000, category: "Đồ uống" },
+      { id: "ruou", name: "Rượu", price: 30000, category: "Đồ uống" },
+      { id: "thuoc_la", name: "Thuốc lá", price: 20000, category: "Đồ uống" }
+    ];
+
+    const TABLE_NAMES = [
+      "Vỉa hè 1", "Vỉa hè 2", "Vỉa hè 3", "Vỉa hè 4", "Vỉa hè 5", "Vỉa hè 6",
+      "Trong nhà 1", "Trong nhà 2", "Trong nhà 3", "Trong nhà 4", "Trong nhà 5", "Trong nhà 6",
+      "Đào tiên ngoài", "Đào tiên trong",
+      "Sân gốc mít", "Sân cột đèn", "Sân cửa phải", "Sân cửa trái",
+      "Lộc vừng trái", "Lộc vừng phải", "Lộc vừng giữa",
+      "Bàn thêm", "Bàn ghép"
+    ];
+
+    let menuState = [...DEFAULT_MENU].map(m => ({ ...m, isAvailable: true })); 
+    let activeTab = "Tất cả";
+    let menuKeyword = "";
+    let cart = {};
+
+    function initTablePersistence() {
+      const savedTable = localStorage.getItem("bi_persisted_table");
+      if (savedTable && TABLE_NAMES.includes(savedTable)) {
+        document.getElementById("activeTableText").textContent = savedTable;
+        lockTableSelect(savedTable);
+      } else {
+        document.getElementById("activeTableText").textContent = "-- Chọn Bàn --";
+        document.getElementById("changeTableBtn").style.display = "none";
+      }
+    }
+
+    function lockTableSelect(tableName) {
+      document.getElementById("tableBox").classList.add("table-saved");
+      document.getElementById("tableLabel").textContent = "BÀN:";
+      document.getElementById("changeTableBtn").style.display = "block";
+      adjustBeerBarPosition();
+    }
+
+    function unlockTableSelect() {
+      localStorage.removeItem("bi_persisted_table");
+      document.getElementById("activeTableText").textContent = "-- Chọn Bàn --";
+      document.getElementById("tableBox").classList.remove("table-saved");
+      document.getElementById("tableLabel").textContent = "CHỌN BÀN:";
+      document.getElementById("changeTableBtn").style.display = "none";
+      openTableModal();
+    }
+
+    function adjustBeerBarPosition() {
+      const bar = document.getElementById("quickBeerBar");
+      if (!bar) return;
+      const hasCart = Object.keys(cart).length > 0;
+      if (hasCart) {
+        bar.style.bottom = "105px"; /* stacked beautifully above bottom bar */
+      } else {
+        bar.style.bottom = "calc(16px + env(safe-area-inset-bottom))";
+      }
+    }
+
+    // Floating text Toast
+    function showToastBubble(text) {
+      const toast = document.createElement("div");
+      toast.style.position = "fixed";
+      toast.style.left = "50%";
+      toast.style.bottom = "180px"; // move toast slightly up so it's not hidden by bars
+      toast.style.transform = "translateX(-50%)";
+      toast.style.background = "var(--primary-gradient)";
+      toast.style.color = "#ffffff";
+      toast.style.padding = "10px 22px";
+      toast.style.borderRadius = "9999px";
+      toast.style.fontSize = "13px";
+      toast.style.fontWeight = "600";
+      toast.style.boxShadow = "0 8px 24px rgba(234, 88, 12, 0.25)";
+      toast.style.zIndex = "1000";
+      toast.style.pointerEvents = "none";
+      toast.style.animation = "floatUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards";
+      toast.innerText = text;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 1200);
+    }
+
+    function quickAddBeer(beerId) {
+      const beerItem = menuState.find(m => m.id === beerId);
+      if (!beerItem) return;
+      if (!beerItem.isAvailable) {
+        alert(`⚠️ Hiện tại quán đã hết ${beerItem.name} mất rồi! Vui lòng chọn loại đồ uống khác hoặc báo nhân viên.`);
+        return;
+      }
+      
+      cart[beerId] = (cart[beerId] || 0) + 1;
+      saveState(); 
+      renderContent(); 
+      updateBottomBar();
+      
+      if(document.getElementById("modal").classList.contains("show")) renderCartList();
+      showToastBubble(`+1 ${beerItem.name} thơm ngon!`);
+    }
+
+    function quickMinusBeer(beerId) {
+      if (cart[beerId]) {
+        cart[beerId]--;
+        if (cart[beerId] <= 0) delete cart[beerId];
+        saveState();
+        renderContent();
+        updateBottomBar();
+        if(document.getElementById("modal").classList.contains("show")) renderCartList();
+        
+        const beerItem = menuState.find(m => m.id === beerId);
+        showToastBubble(`-1 ${beerItem ? beerItem.name : "Đồ uống"}`);
+      }
+    }
+
+    function updateBeerBarUI() {
+      const bar = document.getElementById("quickBeerBar");
+      if (!bar) return;
+      
+      const beers = [
+        { id: "bia_hoi", name: "HƠI", emoji: "🍺" },
+        { id: "bia_lon", name: "LON", emoji: "🥫" },
+        { id: "bia_chai", name: "CHAI", emoji: "🍾" }
+      ];
+      
+      let html = "";
+      beers.forEach(beer => {
+        const qty = cart[beer.id] || 0;
+        const menuItem = menuState.find(m => m.id === beer.id);
+        const isAvailable = menuItem ? menuItem.isAvailable : true;
+        
+        let buttonHtml = "";
+        if (!isAvailable) {
+          buttonHtml = `
+            <div class="beer-btn beer-btn-disabled">
+              <span class="beer-emoji">🚫</span>
+              <span class="beer-label">Hết</span>
+            </div>
+          `;
+        } else {
+          buttonHtml = `
+            <div class="beer-btn ${qty > 0 ? 'beer-btn-selected' : ''}" onclick="quickAddBeer('${beer.id}')">
+              <span class="beer-emoji">${beer.emoji}</span>
+              <span class="beer-label">${beer.name}</span>
+              ${qty > 0 ? `<span class="beer-qty-badge">${qty}</span>` : ''}
+            </div>
+          `;
+        }
+        
+        html += `
+          <div class="beer-item-wrapper" style="flex: 1;">
+            ${buttonHtml}
+          </div>
+        `;
+      });
+      
+      bar.innerHTML = html;
+      adjustBeerBarPosition();
+    }
+
+    async function fetchMenuAvailability() {
+      if (!WEB_APP_URL) return;
+      try {
+        const res = await fetch(WEB_APP_URL);
+        const cloud = await res.json();
+        if (cloud && cloud.menuStatus) {
+          menuState.forEach(item => {
+            const remote = cloud.menuStatus.find(r => r[0] === item.id);
+            if (remote) {
+              const isAvailable = (remote[2] === true || remote[2] === "true");
+              item.isAvailable = isAvailable;
+              if(!isAvailable && cart[item.id]) { delete cart[item.id]; }
+            }
+          });
+          renderContent(); updateBottomBar();
+        }
+      } catch (err) { console.log("Lỗi đồng bộ kho ngầm:", err); }
+    }
+
+    function init() {
+      loadState(); 
+      initTablePersistence(); 
+      renderTabs(); 
+      renderContent(); 
+      updateBottomBar();
+      fetchMenuAvailability(); 
+      setInterval(fetchMenuAvailability, 10000); // Poll every 10 seconds for super fast updates!
+      
+      // Proactive fetch when page is focused or visible
+      window.addEventListener("focus", fetchMenuAvailability);
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") {
+          fetchMenuAvailability();
+        }
+      });
+    }
+
+    function saveState() { 
+      localStorage.setItem("bi_menu_cart", JSON.stringify(cart)); 
+      adjustBeerBarPosition();
+    }
+    
+    function loadState() { 
+      try { 
+        const savedCart = localStorage.getItem("bi_menu_cart"); 
+        if(savedCart) cart = JSON.parse(savedCart); 
+      } catch(e){} 
+    }
+    
+    function formatVND(num) { return num.toLocaleString('vi-VN') + '₫'; }
+
+    function renderTabs() {
+      const categories = ["Tất cả", ...new Set(menuState.map(i => i.category))];
+      document.getElementById("tabs").innerHTML = categories.map(cat => `
+        <button class="tab-btn ${activeTab === cat ? 'active' : ''}" onclick="switchTab('${cat}')">${cat}</button>
+      `).join("");
+    }
+
+    function switchTab(cat) { activeTab = cat; renderTabs(); renderContent(); }
+
+    function renderContent() {
+      const contentEl = document.getElementById("content");
+      let items = menuState;
+      if(activeTab !== "Tất cả") items = items.filter(i => i.category === activeTab);
+      if(menuKeyword.trim()) {
+        const kw = menuKeyword.toLowerCase().trim();
+        items = items.filter(i => i.name.toLowerCase().includes(kw));
+      }
+
+      if(items.length === 0) {
+        contentEl.innerHTML = `<div style="text-align:center;padding:50px;color:var(--muted);font-size:14px;font-weight:700;">Không tìm thấy món ăn phù hợp.</div>`;
+        return;
+      }
+
+      const groups = {};
+      items.forEach(i => { if(!groups[i.category]) groups[i.category] = []; groups[i.category].push(i); });
+
+      let html = "";
+      for(let cat in groups) {
+        html += `<h2 class="category-title">${cat}</h2><div class="menu-grid">`;
+        html += groups[cat].map(item => {
+          const qty = cart[item.id] || 0;
+          let actionHtml = "";
+          let activeClass = qty > 0 ? "menu-item-active" : "";
+          
+          if (!item.isAvailable) {
+            actionHtml = `<span class="out-of-stock-badge">Hết món</span>`;
+          } else if(qty === 0) {
+            actionHtml = `<button class="btn-add-initial" data-action="add" data-id="${item.id}">Thêm</button>`;
+          } else {
+            actionHtml = `
+              <div class="qty-controls">
+                <button class="btn-qty" data-action="minus" data-id="${item.id}">-</button>
+                <span class="qty-value">${qty}</span>
+                <button class="btn-qty" data-action="add" data-id="${item.id}">+</button>
+              </div>`;
+          }
+          
+          return `
+            <div class="menu-item ${activeClass}">
+              <div class="item-info">
+                <h3 class="item-name">${item.name}</h3>
+                <span class="item-price">${formatVND(item.price)}</span>
+              </div>
+              <div class="action-wrapper">${actionHtml}</div>
+            </div>`;
+        }).join("");
+        html += `</div>`;
+      }
+      contentEl.innerHTML = html;
+    }
+
+    function addItem(id) {
+      const item = menuState.find(m => m.id === id); if(!item || !item.isAvailable) return;
+      cart[id] = (cart[id] || 0) + 1; 
+      saveState(); 
+      renderContent(); 
+      updateBottomBar();
+      if(document.getElementById("modal").classList.contains("show")) renderCartList();
+    }
+
+    function minusItem(id) {
+      if(cart[id]) {
+        cart[id]--; if(cart[id] <= 0) delete cart[id];
+        saveState(); 
+        renderContent(); 
+        updateBottomBar();
+        if(document.getElementById("modal").classList.contains("show")) { 
+          renderCartList(); 
+          if(Object.keys(cart).length === 0) closeModal(); 
+        }
+      }
+    }
+
+    function updateBottomBar() {
+      const bar = document.getElementById("bottomBar"); 
+      const totalQtyEl = document.getElementById("summaryQty"); 
+      const totalCostEl = document.getElementById("summaryTotal");
+      
+      let totalQty = 0; 
+      let totalPrice = 0;
+      
+      for(let id in cart) { 
+        const item = menuState.find(m => m.id === id); 
+        if(item) { 
+          totalQty += cart[id]; 
+          totalPrice += cart[id] * item.price; 
+        } 
+      }
+      
+      if(totalQty > 0) { 
+        totalQtyEl.textContent = `Đã chọn ${totalQty} phần ăn`; 
+        totalCostEl.textContent = formatVND(totalPrice); 
+        bar.style.display = "block"; 
+      } else { 
+        bar.style.display = "none"; 
+      }
+      
+      adjustBeerBarPosition();
+      updateBeerBarUI();
+    }
+
+    function openModal() {
+      const table = localStorage.getItem("bi_persisted_table");
+      if(!table) { 
+        alert("⚠️ Vui lòng nhấp chọn Bàn của bạn ở góc trên bên phải trước khi kiểm tra đơn gọi món!"); 
+        openTableModal();
+        return; 
+      }
+      fetchMenuAvailability(); // Proactive fetch right before showing cart
+      renderCartList(); 
+      document.getElementById("modal").classList.add("show");
+    }
+
+    function closeModal(e) { 
+      if(!e || e.target === document.getElementById("modal") || e.target.className === "modal-close" || e.target.className === "modal-handle") { 
+        document.getElementById("modal").classList.remove("show"); 
+      } 
+    }
+
+    function renderCartList() {
+      const listEl = document.getElementById("cartList"); 
+      let html = "";
+      for(let id in cart) {
+        const item = menuState.find(m => m.id === id);
+        if(item) { 
+          html += `
+            <div class="cart-item">
+              <div class="cart-item-info">
+                <div class="cart-item-name">${item.name}</div>
+                <div class="cart-item-price">${formatVND(item.price)}</div>
+              </div>
+              <div class="qty-controls">
+                <button class="btn-qty" data-action="minus-cart" data-id="${id}">-</button>
+                <span class="qty-value">${cart[id]}</span>
+                <button class="btn-qty" data-action="add-cart" data-id="${id}">+</button>
+              </div>
+            </div>`; 
+        }
+      }
+      listEl.innerHTML = html;
+    }
+
+    /* custom searchable table selector modal logic */
+    function renderTablesList() {
+      const container = document.getElementById("tableListContainer");
+      const keyword = document.getElementById("tableSearchInput").value.toLowerCase().trim();
+      const savedTable = localStorage.getItem("bi_persisted_table");
+      
+      let html = "";
+      TABLE_NAMES.forEach(name => {
+        const cleanName = name.toLowerCase().replace(/đ/g, "d").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        const cleanKeyword = keyword.replace(/đ/g, "d").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        
+        if (keyword && !name.toLowerCase().includes(keyword) && !cleanName.includes(cleanKeyword)) return;
+        
+        const activeClass = savedTable === name ? "active" : "";
+        html += `
+          <button class="table-select-btn ${activeClass}" onclick="selectLocalTable('${name}')">${name}</button>
+        `;
+      });
+      
+      container.innerHTML = html || `<div style="grid-column: span 2; text-align: center; padding: 30px; color: var(--muted); font-size: 13px; font-weight: bold;">Không tìm thấy bàn phù hợp.</div>`;
+    }
+
+    function filterTables() {
+      renderTablesList();
+    }
+
+    function openTableModal() {
+      fetchMenuAvailability(); // Proactive fetch when opening table selector
+      document.getElementById("tableSearchInput").value = "";
+      renderTablesList();
+      document.getElementById("tableModal").classList.add("show");
+      setTimeout(() => {
+        document.getElementById("tableSearchInput").focus();
+      }, 100);
+    }
+
+    function closeTableModal(e) {
+      if (!e || e.target === document.getElementById("tableModal") || e.target.className === "modal-close" || e.target.className === "modal-handle") {
+        document.getElementById("tableModal").classList.remove("show");
+      }
+    }
+
+    function selectLocalTable(tableName) {
+      localStorage.setItem("bi_persisted_table", tableName);
+      document.getElementById("activeTableText").textContent = tableName;
+      lockTableSelect(tableName);
+      document.getElementById("tableModal").classList.remove("show");
+    }
+
+    async function submitOrder() {
+      const table = localStorage.getItem("bi_persisted_table");
+      if(!table) return alert("Vui lòng chọn vị trí bàn!");
+      
+      const itemsList = []; 
+      let totalQty = 0; 
+      let totalPrice = 0;
+
+      for(let id in cart) {
+        const item = menuState.find(m => m.id === id);
+        if(item) { 
+          itemsList.push({ 
+            item_id: item.id, 
+            item_name: item.name, 
+            qty: cart[id], 
+            unit_price: item.price, 
+            line_total: cart[id] * item.price 
+          }); 
+          totalQty += cart[id]; 
+          totalPrice += cart[id] * item.price; 
+        }
+      }
+
+      if(itemsList.length === 0) return alert("Giỏ hàng đang trống! Vui lòng chọn món.");
+
+      const submitBtn = document.getElementById("submitBtn"); 
+      submitBtn.disabled = true; 
+      submitBtn.textContent = "Đang gửi yêu cầu vào bếp..."; 
+      submitBtn.style.background = "var(--muted)";
+      submitBtn.style.boxShadow = "none";
+
+      const timestamp = Date.now().toString().slice(-6) + Math.floor(Math.random() * 100);
+      const autoOrderId = "OD" + timestamp;
+
+      const payload = { 
+        action: "save_order", 
+        data: { 
+          order_id: autoOrderId,                 
+          table_name: table, 
+          note: document.getElementById("orderNote").value.trim(), 
+          total_qty: totalQty, 
+          total_price: totalPrice, 
+          created_at: new Date().toISOString(), 
+          items: itemsList 
+        } 
+      };
+
+      try {
+        await fetch(WEB_APP_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+        alert(`🎉 [GỬI THÀNH CÔNG] Đơn gọi món của Bàn [${table.toUpperCase()}] đã được chuyển vào bếp chế biến! Đồ ăn/đồ uống sẽ được phục vụ ngay.`);
+        
+        cart = {}; 
+        document.getElementById("orderNote").value = ""; 
+        saveState(); 
+        document.getElementById("modal").classList.remove("show"); 
+        renderContent(); 
+        updateBottomBar();
+      } catch (err) {
+        alert("Lỗi mạng: Không thể gửi đơn. Vui lòng báo nhân viên phục vụ tại bàn!");
+      } finally { 
+        submitBtn.disabled = false; 
+        submitBtn.textContent = "Gửi Yêu Cầu Gọi Món"; 
+        submitBtn.style.background = "var(--success-gradient)";
+        submitBtn.style.boxShadow = "0 6px 20px rgba(16, 185, 129, 0.2)";
+      } 
+    }
+
+    const menuSearch = document.getElementById("menuSearch"); 
+    const menuSearchClear = document.getElementById("menuSearchClear");
+    
+    menuSearch.addEventListener("input", (e) => { 
+      menuKeyword = e.target.value; 
+      menuSearchClear.classList.toggle("show", !!menuKeyword.trim()); 
+      renderTabs(); 
+      renderContent(); 
+    });
+    
+    menuSearchClear.addEventListener("click", () => { 
+      menuSearch.value = ""; 
+      menuKeyword = ""; 
+      menuSearchClear.classList.remove("show"); 
+      renderTabs(); 
+      renderContent(); 
+      menuSearch.focus(); 
+    });
+    
+    document.getElementById("content").addEventListener("click", (e) => { 
+      const btn = e.target.closest("button[data-action][data-id]"); 
+      if (!btn) return; 
+      const { action, id } = btn.dataset; 
+      if (action === "add") addItem(id); 
+      if (action === "minus") minusItem(id); 
+    });
+    
+    document.getElementById("cartList").addEventListener("click", (e) => { 
+      const btn = e.target.closest("button[data-action][data-id]"); 
+      if (!btn) return; 
+      const { action, id } = btn.dataset; 
+      if (action === "add-cart") addItem(id); 
+      if (action === "minus-cart") minusItem(id); 
+    });
+
+    window.onload = init;
+  </script>
+</body>
+</html>
